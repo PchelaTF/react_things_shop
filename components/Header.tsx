@@ -3,6 +3,7 @@ import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import ShoppingCart from "./ShoppingCart";
 import Link from "next/link";
+import SearchModal from "./SearchModal";
 
 const navigation = {
     categories: [
@@ -134,13 +135,19 @@ function classNames(...classes: string[]) {
 export default function Header() {
     const [open, setOpen] = useState(false)
     const [cartOpen, setCartOpen] = useState(false)
+    const [searchOpen, setSearchOpen] = useState(false)
 
     const handleCartView = () => {
         setCartOpen(!cartOpen)
     }
 
+    const handleSearchView =() => {
+        setSearchOpen(!searchOpen)
+    }
+
     return (
-        <div className="bg-white">
+        <>
+            <div className="bg-white">
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -427,13 +434,23 @@ export default function Header() {
                                 {/*</div>*/}
 
                                 {/* Search */}
-                                <div className="flex lg:ml-6">
+                                <div className="flex lg:ml-6" onClick={handleSearchView}>
                                     <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
                                         <span className="sr-only">Search</span>
                                         <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
                                     </a>
                                 </div>
+                                {searchOpen ? <SearchModal/> : null}
 
+                                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                                    <Link href={'login'} className="text-sm font-medium text-gray-700 hover:text-gray-800 lg:ml-6">
+                                        Sign in
+                                    </Link>
+                                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                        Create account
+                                    </a>
+                                </div>
 
                                 {/* Cart  lg:ml-6*/}
                                 <div className="ml-4 flow-root ">
@@ -449,21 +466,12 @@ export default function Header() {
                                 </div>
                                 {cartOpen ? <ShoppingCart/> : null}
 
-                                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800 lg:ml-6">
-                                        Sign in
-                                    </a>
-                                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                                        Create account
-                                    </a>
-                                </div>
-
                             </div>
                         </div>
                     </div>
                 </nav>
             </header>
         </div>
+        </>
     )
 }

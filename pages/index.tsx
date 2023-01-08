@@ -80,7 +80,7 @@ export default function Index() {
   ]
 
   return (
-    <MainContainer>
+    <MainContainer title={'Home Page'}>
        <>
          {/*Category*/}
          <div className=" mx-auto max-w-7xl flex justify-center items-center w-full lg:px-8 md:py-12  py-9 px-4">
